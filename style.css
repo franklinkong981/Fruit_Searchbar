@@ -23,3 +23,8 @@ body {
   width: 60vw;
   margin-bottom: 10px;
 }
+
+.suggestion {
+  list-style-type: none;
+  margin-bottom: 5px;
+}

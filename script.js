@@ -81,6 +81,7 @@ const fruits = [
 ];
 
 const fruitSearchBar = document.getElementById("fruit-search-bar");
+const fruitSuggestionsList = document.getElementById("fruit-suggestions-list");
 fruitSearchBar.addEventListener("keyup", (event) => {
 	if (event.key !== "Shift") { 
 		findAndDisplay(event.target.value.toLowerCase());
@@ -90,8 +91,8 @@ fruitSearchBar.addEventListener("keyup", (event) => {
 function findAndDisplay(searchBarValue) {
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
 	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
-	//displaySuggestions(suggestionList);
-
+	console.log(suggestionList);
+	displaySuggestions(suggestionList);
 }
 
 function findMatchingSuggestions(searchBarValue) { //filter fruits array to return all entries that contain current value in the search bar.
@@ -107,6 +108,11 @@ function createSuggestionList(matchingSuggestions) {
 	});
 }
 
+function displaySuggestions(suggestionList) {
+	for (suggestion of suggestionList) {
+		fruitSuggestionsList.append(suggestion);
+	}
+}
 
 
 
