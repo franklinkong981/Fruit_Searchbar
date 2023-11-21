@@ -80,6 +80,11 @@ const fruits = [
 	'Yuzu'
 ];
 
+const fruitSearchBar = document.getElementById("fruit-search-bar");
+fruitSearchBar.addEventListener("keyup", (event) => {
+	filterAndDisplay(event.target.value);
+}); //filter and display dropdown suggestions each time value in fruit search bar changes.
+
 
 
 
