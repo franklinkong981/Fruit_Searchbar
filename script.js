@@ -1,4 +1,4 @@
-const fruit = [
+const fruits = [
 	'Apple', 
 	'Apricot', 
 	'Avocado', 
