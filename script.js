@@ -83,18 +83,31 @@ const fruits = [
 const fruitSearchBar = document.getElementById("fruit-search-bar");
 fruitSearchBar.addEventListener("keyup", (event) => {
 	if (event.key !== "Shift") { 
-		filterAndDisplay(event.target.value.toLowerCase());
+		findAndDisplay(event.target.value.toLowerCase());
 	}
 }); //filter and display dropdown suggestions each time value in fruit search bar changes.
 
-function filterAndDisplay(searchBarValue) {
+function findAndDisplay(searchBarValue) {
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
-	console.log(matchingSuggestions);
+	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
+	//displaySuggestions(suggestionList);
+
 }
 
 function findMatchingSuggestions(searchBarValue) { //filter fruits array to return all entries that contain current value in the search bar.
 	return fruits.filter((value) => value.toLowerCase().includes(searchBarValue));
 }
+
+function createSuggestionList(matchingSuggestions) {
+	return matchingSuggestions.map((value) => {
+		const suggestion = document.createElement("li");
+		suggestion.innerText = value;
+		suggestion.classList.add("suggestion");
+		return suggestion;
+	});
+}
+
+
 
 
 
