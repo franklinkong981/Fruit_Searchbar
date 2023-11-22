@@ -117,6 +117,7 @@ function addClickEvents(suggestionList) { //Add an Event Listener to each sugges
 		value.addEventListener("click", (event) => {
 			useSuggestion(event.target.innerText);
 			clearSuggestions();
+			searchBar.focus(); //keep cursor in search bar so user doesn't have to click search bar again to modify search after selecting a suggestion.
 		});
 	});
 }
