@@ -45,6 +45,7 @@ h1 {
   width: 60vw;
   height: 60vh;
   overflow-y: auto; /* Enables scrolling if number of suggestions exceeds space allotted */
+  overflow-x: hidden; /*Hides horizontal scrollbar*/
 }
 
 .suggestion {
