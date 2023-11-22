@@ -80,19 +80,19 @@ const fruits = [
 	'Yuzu'
 ];
 
-const fruitSearchBar = document.getElementById("fruit-search-bar");
-const fruitSuggestionsList = document.getElementById("fruit-suggestions-list");
-fruitSearchBar.addEventListener("keyup", (event) => {
+const searchBar = document.getElementById("search-bar");
+const suggestionsList = document.getElementById("suggestions-list");
+searchBar.addEventListener("keyup", (event) => {
 	if (event.key !== "Shift") {
 		const currentSearchValue = event.target.value;
-		clearSuggestions(); 
-		if (currentSearchValue !== "") {
+		clearSuggestions(); //Delete all existing suggestions in DOM to reset it.
+		if (currentSearchValue !== "") { //No suggestions if search bar is empty
 			findAndDisplay(event.target.value.toLowerCase());
 		}
 	}
-}); //filter and display dropdown suggestions each time value in fruit search bar changes.
+}); 
 
-function findAndDisplay(searchBarValue) {
+function findAndDisplay(searchBarValue) { //filter and display dropdown suggestions each time value in fruit search bar changes.
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
 	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
 	console.log(suggestionList);
@@ -104,7 +104,7 @@ function findMatchingSuggestions(searchBarValue) { //filter fruits array to retu
 	return fruits.filter((value) => value.toLowerCase().includes(searchBarValue));
 }
 
-function createSuggestionList(matchingSuggestions) {
+function createSuggestionList(matchingSuggestions) { //creates a list item HTMLElement for each of the filtered suggestions.
 	return matchingSuggestions.map((value) => {
 		const suggestion = document.createElement("li");
 		suggestion.innerText = value;
@@ -122,18 +122,18 @@ function addClickEvents(suggestionList) { //Add an Event Listener to each sugges
 	});
 }
 
-function useSuggestion(suggestionText) {
-	fruitSearchBar.value = suggestionText;
+function useSuggestion(suggestionText) { 
+	searchBar.value = suggestionText;
 }
 
-function displaySuggestions(suggestionList) {
+function displaySuggestions(suggestionList) { //add all suggestion HTMLElements to the DOM so they're visible.
 	for (suggestion of suggestionList) {
-		fruitSuggestionsList.append(suggestion);
+		suggestionsList.append(suggestion);
 	}
 }
 
 function clearSuggestions() {
-	const suggestionsToClear = fruitSuggestionsList.children;
+	const suggestionsToClear = suggestionsList.children;
 	for (let i = suggestionsToClear.length - 1; i >= 0; i--) {
 		suggestionsToClear[i].remove();
 	}

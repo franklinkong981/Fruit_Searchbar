@@ -15,11 +15,11 @@ body {
   border: 1px solid red;
 }
 
-#fruit-search-bar-label {
+#search-bar-label {
   display: block;
 }
 
-#fruit-search-bar {
+#search-bar {
   width: 60vw;
   margin-bottom: 10px;
 }
