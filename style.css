@@ -6,12 +6,15 @@
 
 body {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .search-module {
+  margin-top: 25vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   border: 1px solid red;
 }
 
@@ -21,15 +24,28 @@ body {
 
 #search-bar {
   width: 60vw;
-  margin-bottom: 10px;
+}
+
+.suggestions-section {
+  width: 60vw;
+  height: 60vh;
+  overflow-y: auto; /* Enables scrolling if number of suggestions exceeds space allotted */
 }
 
 .suggestion {
   list-style-type: none;
-  margin-bottom: 5px;
+  width: 60vw;
+  padding: 5px 0px;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
   cursor: pointer;
 }
 
-.suggestion:hover { /*Highlights a suggestion when the user hovers over it. Easier to implement than multiple Event Listeners for mouseover and mouseoff*/
+#suggestions-list:last-child { /* Last suggestion in dropdown will have border on the bottom */
+  border-bottom: 2px solid black;
+}
+
+
+.suggestion:hover { /* Highlights a suggestion when the user hovers over it. Easier to implement than multiple Event Listeners for mouseover and mouseoff */
   background-color: lightgreen;
 }
