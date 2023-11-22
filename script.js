@@ -85,7 +85,7 @@ const fruitSuggestionsList = document.getElementById("fruit-suggestions-list");
 fruitSearchBar.addEventListener("keyup", (event) => {
 	if (event.key !== "Shift") {
 		const currentSearchValue = event.target.value;
-		clearFruitSuggestions(); 
+		clearSuggestions(); 
 		if (currentSearchValue !== "") {
 			findAndDisplay(event.target.value.toLowerCase());
 		}
@@ -96,6 +96,7 @@ function findAndDisplay(searchBarValue) {
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
 	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
 	console.log(suggestionList);
+	addClickEvents(suggestionList);
 	displaySuggestions(suggestionList);
 }
 
@@ -112,13 +113,24 @@ function createSuggestionList(matchingSuggestions) {
 	});
 }
 
+function addClickEvents(suggestionList) { //Add an Event Listener to each suggestion that will populate search bar with suggestion when clicked.
+	suggestionList.forEach((value) => {
+		value.addEventListener("click", (event) => {
+			useSuggestion(event.target.innerText);
+			clearSuggestions();
+		});
+	});
+}
+
+
+
 function displaySuggestions(suggestionList) {
 	for (suggestion of suggestionList) {
 		fruitSuggestionsList.append(suggestion);
 	}
 }
 
-function clearFruitSuggestions() {
+function clearSuggestions() {
 	const suggestionsToClear = fruitSuggestionsList.children;
 	for (let i = suggestionsToClear.length - 1; i >= 0; i--) {
 		suggestionsToClear[i].remove();

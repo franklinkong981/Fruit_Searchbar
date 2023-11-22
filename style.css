@@ -27,4 +27,9 @@ body {
 .suggestion {
   list-style-type: none;
   margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.suggestion:hover { /*Highlights a suggestion when the user hovers over it. Easier to implement than multiple Event Listeners for mouseover and mouseoff*/
+  background-color: lightgreen;
 }
