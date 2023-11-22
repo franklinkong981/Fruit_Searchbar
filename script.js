@@ -122,7 +122,9 @@ function addClickEvents(suggestionList) { //Add an Event Listener to each sugges
 	});
 }
 
-
+function useSuggestion(suggestionText) {
+	fruitSearchBar.value = suggestionText;
+}
 
 function displaySuggestions(suggestionList) {
 	for (suggestion of suggestionList) {
