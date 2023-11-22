@@ -83,7 +83,8 @@ const fruits = [
 const fruitSearchBar = document.getElementById("fruit-search-bar");
 const fruitSuggestionsList = document.getElementById("fruit-suggestions-list");
 fruitSearchBar.addEventListener("keyup", (event) => {
-	if (event.key !== "Shift") { 
+	if (event.key !== "Shift") {
+		clearFruitSuggestions(); 
 		findAndDisplay(event.target.value.toLowerCase());
 	}
 }); //filter and display dropdown suggestions each time value in fruit search bar changes.
@@ -111,6 +112,13 @@ function createSuggestionList(matchingSuggestions) {
 function displaySuggestions(suggestionList) {
 	for (suggestion of suggestionList) {
 		fruitSuggestionsList.append(suggestion);
+	}
+}
+
+function clearFruitSuggestions() {
+	const suggestionsToClear = fruitSuggestionsList.children;
+	for (let i = suggestionsToClear.length - 1; i >= 0; i--) {
+		suggestionsToClear[i].remove();
 	}
 }
 
