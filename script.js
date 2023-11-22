@@ -84,8 +84,11 @@ const fruitSearchBar = document.getElementById("fruit-search-bar");
 const fruitSuggestionsList = document.getElementById("fruit-suggestions-list");
 fruitSearchBar.addEventListener("keyup", (event) => {
 	if (event.key !== "Shift") {
+		const currentSearchValue = event.target.value;
 		clearFruitSuggestions(); 
-		findAndDisplay(event.target.value.toLowerCase());
+		if (currentSearchValue !== "") {
+			findAndDisplay(event.target.value.toLowerCase());
+		}
 	}
 }); //filter and display dropdown suggestions each time value in fruit search bar changes.
 
