@@ -95,7 +95,6 @@ searchBar.addEventListener("keyup", (event) => {
 function findAndDisplay(searchBarValue) { //filter and display dropdown suggestions each time value in fruit search bar changes.
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
 	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
-	console.log(suggestionList);
 	addClickEvents(suggestionList);
 	displaySuggestions(suggestionList);
 }
