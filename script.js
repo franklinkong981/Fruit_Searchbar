@@ -82,11 +82,13 @@ const fruits = [
 
 const searchBar = document.getElementById("search-bar");
 const suggestionsList = document.getElementById("suggestions-list");
+let currentSearch = searchBar.value;
 searchBar.addEventListener("keyup", (event) => {
-	if (event.key !== "Shift") {
-		const currentSearchValue = event.target.value;
+	//If user presses a key that doesn't change what's currently typed into the search bar, don't update suggestions. 
+	if (event.target.value !== currentSearch) {
+		updateCurrentSearch(event.target.value);
 		clearSuggestions(); //Delete all existing suggestions in DOM to reset it.
-		if (currentSearchValue !== "") { //No suggestions if search bar is empty
+		if (currentSearch !== "") { //No suggestions if search bar is empty
 			findAndDisplay(event.target.value.toLowerCase());
 		}
 	}
@@ -96,13 +98,17 @@ suggestionsList.addEventListener("click", (event) => {
 	if (event.target.tagName === "LI") {
 		useSuggestion(event.target.innerText);
 		clearSuggestions();
-		searchBar.focus();
+		searchBar.focus(); //So user doesn't need to click on search bar again to modify search.
 	}
 });
 
+function updateCurrentSearch(currentSearchValue) {
+	currentSearch = currentSearchValue;
+}
+
 function findAndDisplay(searchBarValue) { //filter and display dropdown suggestions each time value in fruit search bar changes.
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
-	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
+	const suggestionList = createSuggestionList(matchingSuggestions); 
 	displaySuggestions(suggestionList);
 }
 
@@ -119,25 +125,15 @@ function createSuggestionList(matchingSuggestions) { //creates a list item HTMLE
 	});
 }
 
-/*function addClickEvents(suggestionList) { //Add an Event Listener to each suggestion that will populate search bar with suggestion when clicked.
-	suggestionList.forEach((value) => {
-		value.addEventListener("click", (event) => {
-			useSuggestion(event.target.innerText);
-			clearSuggestions();
-			searchBar.focus(); //keep cursor in search bar so user doesn't have to click search bar again to modify search after selecting a suggestion.
-		});
-	});
-}*/
-
-function useSuggestion(suggestionText) {
-	searchBar.value = suggestionText;
-}
-
 function displaySuggestions(suggestionList) { //add all suggestion HTMLElements to the DOM so they're visible.
 	for (suggestion of suggestionList) {
 		suggestionsList.append(suggestion);
 	}
 }
+
+function useSuggestion(suggestionText) {
+	searchBar.value = suggestionText;
+} 
 
 function clearSuggestions() {
 	const suggestionsToClear = suggestionsList.children;
