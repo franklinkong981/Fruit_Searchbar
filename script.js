@@ -92,10 +92,17 @@ searchBar.addEventListener("keyup", (event) => {
 	}
 }); 
 
+suggestionsList.addEventListener("click", (event) => {
+	if (event.target.tagName === "LI") {
+		useSuggestion(event.target.innerText);
+		clearSuggestions();
+		searchBar.focus();
+	}
+});
+
 function findAndDisplay(searchBarValue) { //filter and display dropdown suggestions each time value in fruit search bar changes.
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
 	const suggestionList = createSuggestionList(matchingSuggestions); //suggestion HTMLElements without event listeners.
-	addClickEvents(suggestionList);
 	displaySuggestions(suggestionList);
 }
 
@@ -112,7 +119,7 @@ function createSuggestionList(matchingSuggestions) { //creates a list item HTMLE
 	});
 }
 
-function addClickEvents(suggestionList) { //Add an Event Listener to each suggestion that will populate search bar with suggestion when clicked.
+/*function addClickEvents(suggestionList) { //Add an Event Listener to each suggestion that will populate search bar with suggestion when clicked.
 	suggestionList.forEach((value) => {
 		value.addEventListener("click", (event) => {
 			useSuggestion(event.target.innerText);
@@ -120,9 +127,9 @@ function addClickEvents(suggestionList) { //Add an Event Listener to each sugges
 			searchBar.focus(); //keep cursor in search bar so user doesn't have to click search bar again to modify search after selecting a suggestion.
 		});
 	});
-}
+}*/
 
-function useSuggestion(suggestionText) { 
+function useSuggestion(suggestionText) {
 	searchBar.value = suggestionText;
 }
 
