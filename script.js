@@ -87,16 +87,23 @@ searchBar.addEventListener("keyup", (event) => {
 	//If user presses a key that doesn't change what's currently typed into the search bar, don't update suggestions. 
 	if (event.target.value !== currentSearch) {
 		updateCurrentSearch(event.target.value);
-		clearSuggestions(); //Delete all existing suggestions in DOM to reset it.
+		clearSuggestions(); //Delete all existing suggestions in DOM to reset suggestion list.
 		if (currentSearch !== "") { //No suggestions if search bar is empty
-			findAndDisplay(event.target.value.toLowerCase());
+			findAndDisplaySuggestions(event.target.value.toLowerCase());
 		}
 	}
 }); 
 
 suggestionsList.addEventListener("click", (event) => {
-	if (event.target.tagName === "LI") {
-		useSuggestion(event.target.innerText);
+	if (event.target.tagName === "LI" || event.target.parentElement.tagName === "LI") { //user might press bolded part of suggestion.
+		if (event.target.tagName === "LI") {
+			useSuggestion(event.target.innerText); //innerText ignores <em> and </em>.
+			updateCurrentSearch(event.target.innerText);
+		}
+		else {
+			useSuggestion(event.target.parentElement.innerText);
+			updateCurrentSearch(event.target.parentElement.innerText);
+		}
 		clearSuggestions();
 		searchBar.focus(); //So user doesn't need to click on search bar again to modify search.
 	}
@@ -106,9 +113,9 @@ function updateCurrentSearch(currentSearchValue) {
 	currentSearch = currentSearchValue;
 }
 
-function findAndDisplay(searchBarValue) { //filter and display dropdown suggestions each time value in fruit search bar changes.
+function findAndDisplaySuggestions(searchBarValue) { //filter and display dropdown suggestions each time value in search bar changes.
 	const matchingSuggestions = findMatchingSuggestions(searchBarValue);
-	const suggestionList = createSuggestionList(matchingSuggestions); 
+	const suggestionList = createSuggestionList(matchingSuggestions, searchBarValue); 
 	displaySuggestions(suggestionList);
 }
 
@@ -116,13 +123,19 @@ function findMatchingSuggestions(searchBarValue) { //filter fruits array to retu
 	return fruits.filter((value) => value.toLowerCase().includes(searchBarValue));
 }
 
-function createSuggestionList(matchingSuggestions) { //creates a list item HTMLElement for each of the filtered suggestions.
+function createSuggestionList(matchingSuggestions, searchBarValue) { //creates a list item HTMLElement for each of the filtered suggestions.
 	return matchingSuggestions.map((value) => {
 		const suggestion = document.createElement("li");
-		suggestion.innerText = value;
+		suggestion.innerHTML = boldSuggestion(value, searchBarValue);
 		suggestion.classList.add("suggestion");
 		return suggestion;
 	});
+}
+
+function boldSuggestion(suggestionText, partToBold) { //returns HTML that bolds the substring in the suggestion that matches the current value in the search bar.
+	let boldIndex = suggestionText.toLowerCase().indexOf(partToBold);
+	let unboldIndex = suggestionText.toLowerCase().indexOf(partToBold) + partToBold.length;
+	return suggestionText.slice(0, boldIndex) + "<em>" + suggestionText.slice(boldIndex, unboldIndex) + "</em>" + suggestionText.slice(unboldIndex);
 }
 
 function displaySuggestions(suggestionList) { //add all suggestion HTMLElements to the DOM so they're visible.
@@ -131,7 +144,7 @@ function displaySuggestions(suggestionList) { //add all suggestion HTMLElements 
 	}
 }
 
-function useSuggestion(suggestionText) {
+function useSuggestion(suggestionText) { //updates search bar with suggestion that was clicked.
 	searchBar.value = suggestionText;
 } 
 

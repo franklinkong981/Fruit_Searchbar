@@ -57,6 +57,10 @@ h1 {
   cursor: pointer;
 }
 
+.suggestion em {
+  font-weight: bold;
+}
+
 li:last-of-type { /* Last suggestion in dropdown will have border on the bottom */
   border-bottom: 2px solid black;
 }
